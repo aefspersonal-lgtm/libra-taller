@@ -38,6 +38,7 @@ input, textarea{
     padding:10px;
     margin-top:5px;
     margin-bottom:10px;
+    box-sizing:border-box;
 }
 
 button{
@@ -51,6 +52,12 @@ button{
 
 button:hover{
     opacity:.9;
+}
+
+#mensaje{
+    margin-top:15px;
+    font-weight:bold;
+    color:green;
 }
 </style>
 </head>
@@ -67,17 +74,66 @@ button:hover{
 <div class="card">
 <h2>Datos del Cliente</h2>
 
-<input type="text" placeholder="Nombre Cliente">
-<input type="text" placeholder="Patente">
-<input type="text" placeholder="Marca">
-<input type="text" placeholder="Modelo">
+<input id="cliente" type="text" placeholder="Nombre Cliente">
+<input id="patente" type="text" placeholder="Patente">
+<input id="marca" type="text" placeholder="Marca">
+<input id="modelo" type="text" placeholder="Modelo">
 
-<textarea rows="5" placeholder="Observaciones"></textarea>
+<textarea id="observaciones" rows="5" placeholder="Observaciones"></textarea>
 
-<button>Guardar Recepción</button>
+<button onclick="guardarRecepcion()">Guardar Recepción</button>
+
+<div id="mensaje"></div>
+
 </div>
 
 </div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC33HI5FV3Pe_TItk3omOrF7wDVsGbrSSw",
+  authDomain: "libra-taller.firebaseapp.com",
+  projectId: "libra-taller",
+  storageBucket: "libra-taller.firebasestorage.app",
+  messagingSenderId: "744770639303",
+  appId: "1:744770639303:web:bd386be5561af5682c75e2"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.guardarRecepcion = async function(){
+
+try{
+
+await addDoc(collection(db,"recepciones"),{
+
+cliente: document.getElementById("cliente").value,
+patente: document.getElementById("patente").value,
+marca: document.getElementById("marca").value,
+modelo: document.getElementById("modelo").value,
+observaciones: document.getElementById("observaciones").value,
+fecha: new Date().toLocaleString()
+
+});
+
+document.getElementById("mensaje").innerHTML =
+"✅ Recepción guardada correctamente";
+
+}catch(error){
+
+document.getElementById("mensaje").innerHTML =
+"❌ Error: " + error.message;
+
+}
+
+}
+
+</script>
 
 </body>
 </html>
