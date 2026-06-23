@@ -86,6 +86,8 @@ button:hover{
 <input id="modelo" type="text" placeholder="Modelo">
 <input id="anio" type="number" placeholder="Año">
 <input id="kilometraje" type="number" placeholder="Kilometraje">
+<input id="vin" type="text" placeholder="VIN / Nº Chasis">
+<input id="motor" type="text" placeholder="Nº Motor">    
 
 <select id="combustible">
     <option value="">Combustible</option>
@@ -103,6 +105,13 @@ button:hover{
 
 <textarea id="observaciones" rows="5" placeholder="Observaciones"></textarea>
 
+    <h3>Estado del Vehículo</h3>
+
+<label><input type="checkbox" id="rayones"> Rayones</label><br>
+<label><input type="checkbox" id="abolladuras"> Abolladuras</label><br>
+<label><input type="checkbox" id="golpes"> Golpes</label><br>
+<label><input type="checkbox" id="accesorios"> Falta de accesorios</label><br><br>
+    
 <button onclick="guardarRecepcion()">Guardar Recepción</button>
 
 <div id="mensaje"></div>
