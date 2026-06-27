@@ -163,7 +163,32 @@ document.getElementById("mensaje").innerHTML =
 }
 
 }
+window.verRecepciones = async function() {
 
+const { getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+const querySnapshot = await getDocs(collection(db, "recepciones"));
+
+let html = "";
+
+querySnapshot.forEach((doc) => {
+
+const d = doc.data();
+
+html += `
+<div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
+<b>Cliente:</b> ${d.cliente || ""}<br>
+<b>Patente:</b> ${d.patente || ""}<br>
+<b>Marca:</b> ${d.marca || ""}<br>
+<b>Modelo:</b> ${d.modelo || ""}<br>
+</div>
+`;
+
+});
+
+document.getElementById("listaRecepciones").innerHTML = html;
+
+}
 </script>
 
 </body>
