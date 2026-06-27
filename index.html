@@ -113,9 +113,39 @@ button:hover{
 <label><input type="checkbox" id="accesorios"> Falta de accesorios</label><br><br>
     
 <button onclick="guardarRecepcion()">Guardar Recepción</button>
+<button type="button" onclick="verRecepciones()">
+Ver Recepciones
+</button>
 
+<div id="listaRecepciones"></div>
 <div id="mensaje"></div>
 
+window.verRecepciones = async function () {
+
+  const lista = document.getElementById("listaRecepciones");
+  lista.innerHTML = "Cargando...";
+
+  const { getDocs } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+
+  const consulta = await getDocs(collection(db, "recepciones"));
+
+  lista.innerHTML = "";
+
+  consulta.forEach((doc) => {
+    const d = doc.data();
+
+    lista.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px 0">
+        <b>${d.cliente}</b><br>
+        Patente: ${d.patente}<br>
+        Marca: ${d.marca}<br>
+        Modelo: ${d.modelo}<br>
+        Fecha: ${d.fecha}
+      </div>
+    `;
+  });
+
+}    
 </div>
 
 </div>
